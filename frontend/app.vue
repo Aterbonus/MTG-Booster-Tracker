@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { DB } from './prisma/db'
+
 interface Set {
 	id: string
 	code: string
@@ -93,6 +95,13 @@ function onCardSelected(set: SelectedSet, target: HTMLInputElement) {
 
 	target.value = ''
 }
+
+onMounted(async () => {
+	const db = new DB()
+	await db.init()
+	console.log(db.getSets())
+	console.log(db.getSetCards('c325b3f9-51e1-416b-83b1-138f11790dd1'))
+})
 </script>
 
 <template>

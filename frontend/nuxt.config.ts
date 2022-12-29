@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
 	modules: ['@nuxtjs/critters', '@unocss/nuxt', '@vueuse/nuxt'],
+	ssr: false,
 	runtimeConfig: {
 		public: {
 			apiBase: ''

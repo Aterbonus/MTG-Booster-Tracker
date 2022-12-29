@@ -7,6 +7,9 @@
 		"preview": "nuxt preview",
 		"postinstall": "nuxt prepare"
 	},
+	"prisma": {
+		"seed": "./prisma/seed.sh"
+	},
 	"devDependencies": {
 		"@nuxtjs/critters": "^0.4.0",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
