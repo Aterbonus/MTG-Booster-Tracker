@@ -11,21 +11,22 @@ datasource db {
 }
 
 model set {
-  id           String   @id
-  code         String   @unique
-  name         String
-  icon_svg_uri String
-  card_count   Int
-  released_at  DateTime
-  cards        card[]
+  id              String   @id
+  code            String   @unique
+  parent_set_code String?
+  name            String
+  icon_svg_uri    String
+  card_count      Int
+  released_at     DateTime
+  cards           card[]
 
+  @@index([parent_set_code])
   @@index(fields: [released_at(sort: Desc)])
 }
 
 model card {
   id               String  @id
   name             String
-  printed_name     String?
   image            String?
   collector_number String
   set              set     @relation(fields: [set_id], references: [id])

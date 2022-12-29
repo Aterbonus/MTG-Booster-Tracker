@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from 'src/prisma/prisma.service';
-import { FindManyCardDto } from './dtos/findManyCard.dto';
+import { PrismaService } from '../prisma/prisma.service'
+import { FindManyCardDto } from './dtos/findManyCard.dto'
 
 @Injectable()
 export class CardService {
-
 	constructor(private prisma: PrismaService) {}
 
 	async findMany(findManyCardDto: FindManyCardDto) {
@@ -15,9 +14,12 @@ export class CardService {
 			take: 1000
 		})
 
-		cards.sort((a, b) => +a.collector_number.replace(/[\D]/g, '') - +b.collector_number.replace(/[\D]/g, ''))
+		cards.sort(
+			(a, b) =>
+				+a.collector_number.replace(/[\D]/g, '') -
+				+b.collector_number.replace(/[\D]/g, '')
+		)
 
 		return cards
 	}
-
 }
