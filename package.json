@@ -11,6 +11,7 @@
 		"seed": "./prisma/seed.sh"
 	},
 	"devDependencies": {
+		"@iconify-json/mdi": "^1.1.40",
 		"@nuxtjs/critters": "^0.4.0",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
 		"@prisma/client": "4.8.0",

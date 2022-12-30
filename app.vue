@@ -89,6 +89,10 @@ function onCardSelected(set: SelectedSet, target: HTMLInputElement) {
 
 	target.value = ''
 }
+
+function removeSelectedSet(index: number) {
+	selectedSets.value.splice(index, 1)
+}
 </script>
 
 <template>
@@ -113,7 +117,10 @@ function onCardSelected(set: SelectedSet, target: HTMLInputElement) {
 		<table>
 			<thead>
 				<tr>
-					<th v-for="set of selectedSets" :key="set.code">{{ set.name }}</th>
+					<th v-for="(set, i) of selectedSets" :key="set.code">
+						{{ set.name }}
+						<button class="i-mdi-close text-red" @click="removeSelectedSet(i)" />
+					</th>
 				</tr>
 			</thead>
 			<tbody>
