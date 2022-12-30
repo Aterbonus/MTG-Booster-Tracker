@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Set {
+  id              String   @id
+  code            String   @unique
+  parent_set_code String?
+  name            String
+  icon_svg_uri    String
+  card_count      Int
+  released_at     DateTime
+  cards           Card[]
+
+  @@index([parent_set_code])
+  @@index(fields: [released_at(sort: Desc)])
+
+	@@map("set")
+}
+
+model Card {
+  id               String  @id
+  name             String
+  image            String?
+  collector_number String
+  set              Set     @relation(fields: [set_id], references: [id])
+  set_id           String
+
+	@@map("card")
+}
