@@ -96,55 +96,63 @@ function removeSelectedSet(index: number) {
 </script>
 
 <template>
-	<div>
-		<input
-			list="set-list"
-			class="border border-black rounded"
-			@keyup.enter="onSetSelected($event.target! as HTMLInputElement)"
-			@change="onSetSelected($event.target! as HTMLInputElement)"
-		/>
-		<datalist id="set-list">
-			<option v-for="set of sets" :key="set.code" :value="set.code">{{ set.name }}</option>
-		</datalist>
-		<label>
-			Include subsets:
-			<input v-model="includeSubsets" type="checkbox" />
-		</label>
-		<button v-if="isSupported" class="border border-black rounded p-2" @click="copy()">
-			<span v-if="!copied">Copy for Moxfield</span>
-			<span v-else>Copied!</span>
-		</button>
-		<table>
-			<thead>
-				<tr>
-					<th v-for="(set, i) of selectedSets" :key="set.code">
-						{{ set.name }}
-						<button class="i-mdi-close text-red" @click="removeSelectedSet(i)" />
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td v-for="(set, i) of selectedSets" :key="set.code">
-						<input
-							:list="`card-list-${i}`"
-							class="border border-black border-rounded"
-							@keyup.enter="onCardSelected(set, $event.target! as HTMLInputElement)"
-							@change="onCardSelected(set, $event.target! as HTMLInputElement)"
-						/>
-						<datalist v-if="cards[set.code]" :id="`card-list-${i}`">
-							<option v-for="card of cards[set.code]" :key="card.id" :value="card.collector_number">{{ card.name }}</option>
-						</datalist>
-					</td>
-				</tr>
-				<tr>
-					<td v-for="set of selectedSets" :key="set.code">
-						<ul v-for="card of set.cards" :key="card.id">
-							<li>{{ card.name }} x {{ card.count }}</li>
-						</ul>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+	<div class="min-h-screen overflow-y-scroll grid grid-rows-[1fr_150px] items-stretch">
+		<main class="container w-full">
+			<input
+				list="set-list"
+				class="border border-black rounded"
+				@keyup.enter="onSetSelected($event.target! as HTMLInputElement)"
+				@change="onSetSelected($event.target! as HTMLInputElement)"
+			/>
+			<datalist id="set-list">
+				<option v-for="set of sets" :key="set.code" :value="set.code">{{ set.name }}</option>
+			</datalist>
+			<label>
+				Include subsets:
+				<input v-model="includeSubsets" type="checkbox" />
+			</label>
+			<button v-if="isSupported" class="border border-black rounded p-2" @click="copy()">
+				<span v-if="!copied">Copy for Moxfield</span>
+				<span v-else>Copied!</span>
+			</button>
+			<table>
+				<thead>
+					<tr>
+						<th v-for="(set, i) of selectedSets" :key="set.code">
+							{{ set.name }}
+							<button class="i-mdi-close text-red" @click="removeSelectedSet(i)" />
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td v-for="(set, i) of selectedSets" :key="set.code">
+							<input
+								:list="`card-list-${i}`"
+								class="border border-black border-rounded"
+								@keyup.enter="onCardSelected(set, $event.target! as HTMLInputElement)"
+								@change="onCardSelected(set, $event.target! as HTMLInputElement)"
+							/>
+							<datalist v-if="cards[set.code]" :id="`card-list-${i}`">
+								<option v-for="card of cards[set.code]" :key="card.id" :value="card.collector_number">{{ card.name }}</option>
+							</datalist>
+						</td>
+					</tr>
+					<tr>
+						<td v-for="set of selectedSets" :key="set.code">
+							<ul v-for="card of set.cards" :key="card.id">
+								<li>{{ card.name }} x {{ card.count }}</li>
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</main>
+		<footer class="p3">
+			<p class="max-w-500px mx-auto text-center">
+				Aterbonus' MTG Opener is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions
+				of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.
+			</p>
+		</footer>
 	</div>
 </template>
