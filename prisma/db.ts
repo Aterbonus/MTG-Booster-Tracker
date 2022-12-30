@@ -1,3 +1,4 @@
+import { Card as MTGCard, Set as MTGSet } from '@prisma/client'
 import initSqlJs from '../assets/sql-wasm.js'
 
 interface Result {
@@ -7,29 +8,6 @@ interface Result {
 
 interface SQLiteDB {
 	exec: (stmt: string) => Result[]
-}
-
-interface MTGSet {
-	id: string
-	code: string
-	parent_set_code: string
-	name: string
-	icon_svg_uri: string
-	card_count: number
-	released_at: string
-}
-
-interface MTGCard {
-	id: string
-	uri: string
-	type: string
-	name: string
-	description: string
-	download_uri: string
-	updated_at: string
-	size: number
-	content_type: string
-	content_encoding: string
 }
 
 export class DB {

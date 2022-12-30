@@ -1,37 +1,22 @@
 <script lang="ts" setup>
+import { Card as MTGCard, Set as MTGSet } from '@prisma/client'
 import { DB } from './prisma/db'
 
-interface Set {
-	id: string
-	code: string
-	parent_set_code: string
-	name: string
-	icon_svg_uri: string
-	card_count: number
-	released_at: string
-}
-
-interface Card {
-	id: string
-	name: string
-	image?: string
-	collector_number: string
-	set_id: string
-}
-
-interface SelectedSetCard extends Card {
+interface SelectedSetCard extends MTGCard {
 	count: number
 }
 
-interface SelectedSet extends Set {
+interface SelectedSet extends MTGSet {
 	cards: SelectedSetCard[]
 }
 
-const config = useRuntimeConfig()
-const { data: sets } = useFetch<Set[]>(config.public.apiBase + 'sets')
+const db = new DB()
+await db.init()
+
+const sets = db.getSets()
 const includeSubsets = ref(true)
 const selectedSets = ref<SelectedSet[]>([])
-const cards = ref<{ [key: string]: Card[] }>({})
+const cards = ref<{ [key: string]: MTGCard[] }>({})
 
 watch(
 	selectedSets,
@@ -41,7 +26,7 @@ watch(
 				// To no execute again
 				cards.value[set.code] = []
 
-				$fetch<Card[]>(config.public.apiBase + `cards?setId=${set.id}`).then(cardsArr => (cards.value[set.code] = cardsArr))
+				cards.value[set.code] = db.getSetCards(set.id)
 			}
 		})
 	},
@@ -51,7 +36,7 @@ watch(
 )
 
 function onSetSelected(target: HTMLInputElement) {
-	const set = sets.value?.find(set => target.value === set.code)
+	const set = sets.find(set => target.value === set.code)
 
 	if (set) {
 		selectedSets.value.push({ ...set, cards: [] })
@@ -64,8 +49,8 @@ function onSetSelected(target: HTMLInputElement) {
 	target.value = ''
 }
 
-function addSubsets(set: Set) {
-	const subSets = sets.value?.filter(s => s.parent_set_code === set.code)
+function addSubsets(set: MTGSet) {
+	const subSets = sets.filter(s => s.parent_set_code === set.code)
 
 	if (subSets?.length) {
 		selectedSets.value = selectedSets.value.concat(subSets.map(set => ({ ...set, cards: [] })))
@@ -95,13 +80,6 @@ function onCardSelected(set: SelectedSet, target: HTMLInputElement) {
 
 	target.value = ''
 }
-
-onMounted(async () => {
-	const db = new DB()
-	await db.init()
-	console.log(db.getSets())
-	console.log(db.getSetCards('c325b3f9-51e1-416b-83b1-138f11790dd1'))
-})
 </script>
 
 <template>
