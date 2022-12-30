@@ -1,4 +1,4 @@
-import { Card as MTGCard, Set as MTGSet } from '@prisma/client'
+import { Card as BaseMTGCard, Set as MTGSet } from '@prisma/client'
 import initSqlJs from '../assets/sql-wasm.js'
 
 interface Result {
@@ -10,6 +10,9 @@ interface SQLiteDB {
 	exec: (stmt: string) => Result[]
 }
 
+export interface MTGCard extends BaseMTGCard {
+	set_code: string
+}
 export class DB {
 	#db!: SQLiteDB
 
@@ -39,7 +42,9 @@ export class DB {
 	}
 
 	getSetCards(setId: string): MTGCard[] {
-		const cardsResult = this.#db.exec(`SELECT * FROM card WHERE set_id = '${setId}'`)[0]
+		const cardsResult = this.#db.exec(
+			`SELECT card.*, "set".code AS set_code FROM card JOIN "set" ON card.set_id = "set".id WHERE set_id = '${setId}'`
+		)[0]
 
 		return cardsResult ? this.parseExec(cardsResult) : []
 	}

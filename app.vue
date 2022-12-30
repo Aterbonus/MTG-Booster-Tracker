@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { Card as MTGCard, Set as MTGSet } from '@prisma/client'
-import { DB } from './prisma/db'
+import { Set as MTGSet } from '@prisma/client'
+import { DB, MTGCard } from './prisma/db'
 
 interface SelectedSetCard extends MTGCard {
 	count: number
@@ -17,6 +17,15 @@ const sets = db.getSets()
 const includeSubsets = ref(true)
 const selectedSets = ref<SelectedSet[]>([])
 const cards = ref<{ [key: string]: MTGCard[] }>({})
+const copyTextForMoxfield = computed(() => {
+	return selectedSets.value.reduce(
+		(prev, curr) =>
+			prev + curr.cards.reduce((prev, curr) => prev + `${curr.count} ${curr.name} (${curr.set_code}) ${curr.collector_number}\n`, ''),
+		''
+	)
+})
+
+const { copy, isSupported, copied } = useClipboard({ source: copyTextForMoxfield })
 
 watch(
 	selectedSets,
@@ -86,7 +95,7 @@ function onCardSelected(set: SelectedSet, target: HTMLInputElement) {
 	<div>
 		<input
 			list="set-list"
-			class="border border-black border-rounded"
+			class="border border-black rounded"
 			@keyup.enter="onSetSelected($event.target! as HTMLInputElement)"
 			@change="onSetSelected($event.target! as HTMLInputElement)"
 		/>
@@ -97,6 +106,10 @@ function onCardSelected(set: SelectedSet, target: HTMLInputElement) {
 			Include subsets:
 			<input v-model="includeSubsets" type="checkbox" />
 		</label>
+		<button v-if="isSupported" class="border border-black rounded p-2" @click="copy()">
+			<span v-if="!copied">Copy for Moxfield</span>
+			<span v-else>Copied!</span>
+		</button>
 		<table>
 			<thead>
 				<tr>
