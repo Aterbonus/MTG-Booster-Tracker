@@ -5,6 +5,7 @@ specifiers:
   '@nuxtjs/critters': ^0.4.0
   '@nuxtjs/eslint-config-typescript': ^12.0.0
   '@prisma/client': 4.8.0
+  '@types/sql.js': ^1.4.4
   '@unocss/nuxt': ^0.48.0
   '@unocss/transformer-variant-group': ^0.48.0
   '@vueuse/core': ^9.9.0
@@ -24,6 +25,7 @@ devDependencies:
   '@nuxtjs/critters': 0.4.0
   '@nuxtjs/eslint-config-typescript': 12.0.0_lzzuuodtsqwxnvqeq4g4likcqa
   '@prisma/client': 4.8.0_prisma@4.8.0
+  '@types/sql.js': 1.4.4
   '@unocss/nuxt': 0.48.0
   '@unocss/transformer-variant-group': 0.48.0
   '@vueuse/core': 9.9.0
@@ -987,6 +989,10 @@ packages:
     resolution: {integrity: sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==}
     dev: true
 
+  /@types/emscripten/1.39.6:
+    resolution: {integrity: sha512-H90aoynNhhkQP6DRweEjJp5vfUVdIj7tdPLsu7pq89vODD/lcugKfZOsfgwpvM6XUewEp2N5dCg1Uf3Qe55Dcg==}
+    dev: true
+
   /@types/estree/1.0.0:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
@@ -1013,6 +1019,13 @@ packages:
 
   /@types/semver/7.3.13:
     resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
+    dev: true
+
+  /@types/sql.js/1.4.4:
+    resolution: {integrity: sha512-6EWU2wfiBtzgTy18WQoXZAGTreBjhZcBCfD8CDvyI1Nj0a4KNDDt41IYeAZ40cRUdfqWHb7VGx7t6nK0yBOI5A==}
+    dependencies:
+      '@types/emscripten': 1.39.6
+      '@types/node': 18.11.18
     dev: true
 
   /@types/web-bluetooth/0.0.16:

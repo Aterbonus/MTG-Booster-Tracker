@@ -15,6 +15,7 @@
 		"@nuxtjs/critters": "^0.4.0",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
 		"@prisma/client": "4.8.0",
+		"@types/sql.js": "^1.4.4",
 		"@unocss/nuxt": "^0.48.0",
 		"@unocss/transformer-variant-group": "^0.48.0",
 		"@vueuse/core": "^9.9.0",
