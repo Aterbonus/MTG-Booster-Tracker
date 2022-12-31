@@ -23,29 +23,34 @@ export class DB {
 		this.#db = new SQL.Database(new Uint8Array(buf))
 	}
 
-	private parseExec<T>(execResult: Result) {
-		return execResult.values.map(row => {
+	getSets(): MTGSet[] {
+		return this.exec<MTGSet>('SELECT * FROM "set"')
+	}
+
+	getSetCards(setId: string): MTGCard[] {
+		return this.exec(`SELECT card.*, "set".code AS set_code FROM card JOIN "set" ON card.set_id = "set".id WHERE set_id = '${setId}'`)
+	}
+
+	// TODO: use prepared statement
+	private exec<T>(query: string) {
+		const results = this.#db.exec(query)[0]
+
+		if (!results) {
+			return []
+		}
+
+		const columnsLength = results.columns.length
+
+		return results.values.map(row => {
 			const r: {
 				[key: string]: string
 			} = {}
 
-			for (let i = 0; i < row.length; ++i) {
-				r[execResult.columns[i]] = row[i]
+			for (let i = 0; i < columnsLength; ++i) {
+				r[results.columns[i]] = row[i]
 			}
 
 			return r as T
 		})
-	}
-
-	getSets(): MTGSet[] {
-		return this.parseExec<MTGSet>(this.#db.exec('SELECT * FROM "set"')[0])
-	}
-
-	getSetCards(setId: string): MTGCard[] {
-		const cardsResult = this.#db.exec(
-			`SELECT card.*, "set".code AS set_code FROM card JOIN "set" ON card.set_id = "set".id WHERE set_id = '${setId}'`
-		)[0]
-
-		return cardsResult ? this.parseExec(cardsResult) : []
 	}
 }
