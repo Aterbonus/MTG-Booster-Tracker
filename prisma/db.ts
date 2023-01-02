@@ -1,5 +1,5 @@
 import { Card as BaseMTGCard, Set as MTGSet } from '@prisma/client'
-import type { Database } from 'sql.js'
+import type { Database, ParamsObject, SqlValue } from 'sql.js'
 import initSqlJs from '../assets/sql-wasm.js'
 
 export interface MTGCard extends BaseMTGCard {
@@ -20,21 +20,18 @@ export class DB {
 	}
 
 	getSetCards(setId: string): MTGCard[] {
-		return this.exec`SELECT card.*, "set".code AS set_code FROM card JOIN "set" ON card.set_id = "set".id WHERE set_id = '${setId}'`
+		return this.exec`SELECT card.*, "set".code AS set_code FROM card JOIN "set" ON card.set_id = "set".id WHERE set_id = ${setId}`
 	}
 
-	private exec<T>(queryTemplate: TemplateStringsArray, ...queryArguments: string[]): T[] {
-		const query = queryTemplate.reduce((prev, curr, i) => prev + '$' + i + curr)
-		const args = queryArguments.reduce(
-			(prev, curr, i) => {
-				prev['$' + i] = curr
+	private exec<T>(queryTemplate: TemplateStringsArray, ...queryArguments: SqlValue[]): T[] {
+		const query = queryTemplate.reduce((prev, curr, i) => prev + '$' + (i - 1) + curr)
+		const args = queryArguments.reduce((prev, curr, i) => {
+			prev['$' + i] = curr
 
-				return prev
-			},
-			{} as {
-				[key: string]: any
-			}
-		)
+			return prev
+		}, {} as ParamsObject)
+
+		console.log(query, args)
 
 		const stmt = this.db.prepare(query)
 		const results = []
