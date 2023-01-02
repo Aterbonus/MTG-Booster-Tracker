@@ -118,9 +118,9 @@ const { copy, isSupported, copied } = useClipboard({ source: copyTextForMoxfield
 			<v-col v-for="(set, setIndex) of selectedSets" :key="set.code" cols="12" sm="6" md="4" xl="3">
 				<v-card>
 					<template #title>{{ set.name }}</template>
-					<template #append
-						><v-btn icon="mdi-close" color="red" variant="text" tabindex="-1" @click="removeSelectedSet(setIndex)"
-					/></template>
+					<template #append>
+						<v-btn icon="mdi-close" color="red" variant="text" tabindex="-1" @click="removeSelectedSet(setIndex)" />
+					</template>
 					<v-text-field ref="cardsInputsRefs" label="Card" hide-details @change="onCardSelected(set, setIndex)" />
 					<v-card-text v-if="set.cards.length">
 						<v-list density="compact">
