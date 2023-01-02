@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-	modules: ['@nuxtjs/critters', '@unocss/nuxt', '@vueuse/nuxt'],
+	modules: ['@nuxtjs/critters', '@vueuse/nuxt'],
 	ssr: false,
 	unocss: {
 		preflight: true
