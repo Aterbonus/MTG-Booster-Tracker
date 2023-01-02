@@ -2,8 +2,10 @@
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 
+const appName = "Aterbonus' MTG Booster Tracker"
+
 useHead({
-	title: "Aterbonus' MTG Booster Tracker",
+	title: appName,
 	meta: [{ name: 'description', content: 'Keep track of your cards when opening boosters.' }]
 })
 </script>
@@ -11,7 +13,7 @@ useHead({
 <template>
 	<v-app>
 		<v-app-bar>
-			<v-app-bar-title>Aterbonus' MTG Booster Tracker</v-app-bar-title>
+			<v-app-bar-title>{{ appName }}</v-app-bar-title>
 			<v-btn icon href="https://github.com/Aterbonus/MTG-Booster-Tracker" target="_blank">
 				<v-icon>mdi-github</v-icon>
 			</v-btn>
@@ -22,8 +24,8 @@ useHead({
 			</ClientOnly>
 		</v-main>
 		<v-footer border app>
-			Aterbonus' MTG Booster Tracker is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of
-			the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.
+			{{ appName }} is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the
+			materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.
 		</v-footer>
 	</v-app>
 </template>
