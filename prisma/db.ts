@@ -31,8 +31,6 @@ export class DB {
 			return prev
 		}, {} as ParamsObject)
 
-		console.log(query, args)
-
 		const stmt = this.db.prepare(query)
 		const results = []
 		stmt.bind(args)
