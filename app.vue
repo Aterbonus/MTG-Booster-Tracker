@@ -32,9 +32,12 @@ useHead({
 				<Main />
 			</ClientOnly>
 		</v-main>
-		<v-footer border app>
-			{{ appName }} is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the
-			materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.
+		<v-footer app border absolute class="flex-column text-center">
+			<p>
+				{{ appName }} is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the
+				materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC.
+			</p>
+			<p>Sets and cards data obtained from <a href="https://scryfall.com/docs/api" target="_blank">Scryfall</a>.</p>
 		</v-footer>
 	</v-app>
 </template>
