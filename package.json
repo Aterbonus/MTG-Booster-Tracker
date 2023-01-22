@@ -14,7 +14,7 @@
 		"@mdi/font": "^7.1.96",
 		"@nuxtjs/critters": "^0.4.0",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
-		"@prisma/client": "4.8.0",
+		"@prisma/client": "4.9.0",
 		"@types/sql.js": "^1.4.4",
 		"@vueuse/core": "^9.9.0",
 		"@vueuse/nuxt": "^9.9.0",
