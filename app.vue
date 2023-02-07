@@ -4,9 +4,17 @@ import 'vuetify/styles'
 
 const appName = "Aterbonus' MTG Booster Tracker"
 const themeMode = useLocalStorage('theme-mode', 'dark')
+const date = new Date()
 
 function toggleTheme() {
 	themeMode.value = themeMode.value === 'dark' ? 'light' : 'dark'
+}
+
+function twoDigits(n: number) {
+	return n.toLocaleString('en-US', {
+		minimumIntegerDigits: 2,
+		useGrouping: false
+	})
 }
 
 useHead({
@@ -19,6 +27,7 @@ useHead({
 	<v-app :theme="themeMode">
 		<v-app-bar>
 			<v-app-bar-title>{{ appName }}</v-app-bar-title>
+			<strong class="text-subtitle-2">Last update: {{ twoDigits(date.getFullYear()) }}-{{ twoDigits(date.getMonth() + 1) }}-{{ twoDigits(date.getDate()) }} {{ twoDigits(date.getHours()) }}:{{ twoDigits(date.getMinutes()) }}</strong>
 			<v-btn icon @click="toggleTheme">
 				<v-icon v-if="themeMode === 'light'">mdi-white-balance-sunny</v-icon>
 				<v-icon v-else>mdi-weather-night</v-icon>
