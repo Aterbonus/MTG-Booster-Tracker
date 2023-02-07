@@ -27,7 +27,7 @@ useHead({
 	<v-app :theme="themeMode">
 		<v-app-bar>
 			<v-app-bar-title>{{ appName }}</v-app-bar-title>
-			<strong class="text-subtitle-2">Last update: {{ twoDigits(date.getFullYear()) }}-{{ twoDigits(date.getMonth() + 1) }}-{{ twoDigits(date.getDate()) }} {{ twoDigits(date.getHours()) }}:{{ twoDigits(date.getMinutes()) }}</strong>
+			<strong class="text-subtitle-2 d-none">Last update: {{ twoDigits(date.getFullYear()) }}-{{ twoDigits(date.getMonth() + 1) }}-{{ twoDigits(date.getDate()) }} {{ twoDigits(date.getHours()) }}:{{ twoDigits(date.getMinutes()) }}</strong>
 			<v-btn icon @click="toggleTheme">
 				<v-icon v-if="themeMode === 'light'">mdi-white-balance-sunny</v-icon>
 				<v-icon v-else>mdi-weather-night</v-icon>
